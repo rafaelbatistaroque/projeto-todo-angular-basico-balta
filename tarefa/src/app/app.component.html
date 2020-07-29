@@ -1,1 +1,19 @@
-<h1>App funcionou</h1>
+<h1>{{titulo}}</h1>
+<form [formGroup]="formulario">
+    <fieldset>
+        <label for="">Tarefa</label>
+        <input type="text" placeholder="Titulo da tarefa" maxlength="60" formControlName="tituloTarefa">
+        <small *ngIf="formulario.controls.tituloTarefa.invalid && formulario.controls.tituloTarefa.dirty">Este campo
+            deve conter de 3 a 60 caracteres.</small>
+        <button [disabled]="formulario.invalid" type="button"
+            (click)="adicionarTarefa(formulario.controls.tituloTarefa.value)">Salvar</button>
+    </fieldset>
+</form>
+<ul>
+    <p *ngIf="tarefas.length === 0"><small>Você não tem tarefas hoje.</small></p>
+    <li *ngFor="let tarefa of tarefas">{{tarefa.id}} - {{tarefa.tituloTarefa}} -
+        <button *ngIf="!tarefa.feito" (click)="marcarComoConcluida(tarefa)">Concluir | </button>
+        <button *ngIf="tarefa.feito" (click)="marcarComoNaoConcluida(tarefa)">Refazer | </button>
+        <button (click)="removerTarefa(tarefa)">Remover</button>
+    </li>
+</ul>
